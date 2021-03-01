@@ -1,0 +1,3 @@
+const char* configWifiSsid = "***";
+const char* configWifiPassword = "***";
+const int configTimeZone = 3;

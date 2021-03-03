@@ -8,8 +8,8 @@
 
 
 void sdSetup() {
-  // 4 - chipSelect
-  if (!SD.begin(4)) {
+  // контакт, подключенный к CS-линии SD-карты
+  if (!SD.begin(WEMOS_D8)) {
     dbgLn(1, "SD card failed, or not present");
     while (1) {
       ledOn();

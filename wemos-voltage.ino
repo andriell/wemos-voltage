@@ -6,6 +6,8 @@
 
 // Time Timekeeping functionality for Arduino
 #include <TimeLib.h>
+// ESP8266 and ESP32 OLED driver for SSD1306 displays
+#include<SH1106.h>
 
 
 #define WEMOS_A0     17
@@ -29,10 +31,12 @@ void setup() {
   wemosSetup();
   dbgSetup();
   ledSetup();
+  displaySetup();
   sdSetup();
   fileName = sdNextFileName("liion_", ".csv");
   wifiSetup();
   timeSetup();
+  displayLog(timeString());
 }
 
 unsigned long mainMillis() {
@@ -41,6 +45,7 @@ unsigned long mainMillis() {
 
 void loop() {
   unsigned long startMillis = mainMillis();
+  displayLoop();
 
   String dataString = "" + timeHMSString() + "\t" + liionRaw();
   File dataFile = SD.open(fileName, FILE_WRITE);
@@ -53,6 +58,8 @@ void loop() {
     dbg(1, "error opening ");
     dbgLn(1, fileName);
   }
+
+  
 
   unsigned long endMillis = mainMillis();
   unsigned long executionTime;

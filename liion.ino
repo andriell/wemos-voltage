@@ -56,3 +56,22 @@ int liionP() {
   dbgLn(2, p);
   return p;
 }
+
+// Заряд аккумулятора в процентах.
+// Квадратичная аппроксимация через три точки [[1024, 100], [909, 50], [680, 0]]
+int liionP2() {
+  unsigned int raw = float(analogRead(A0));
+  float v = float(raw);
+  int p = round(((v - 561.982f) * 0.000629f) * (v - 680.0f));
+  if (p < 0) {
+    p = 0;
+  }
+  if (p > 100) {
+    p = 100;
+  }
+  dbg(2, "liion raw: ");
+  dbg(2, raw);
+  dbg(2, "; P: ");
+  dbgLn(2, p);
+  return p;
+}
